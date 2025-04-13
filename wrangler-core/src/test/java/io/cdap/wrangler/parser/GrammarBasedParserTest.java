@@ -21,6 +21,7 @@ import io.cdap.wrangler.api.CompileStatus;
 import io.cdap.wrangler.api.Compiler;
 import io.cdap.wrangler.api.Directive;
 import io.cdap.wrangler.api.RecipeParser;
+import io.cdap.wrangler.api.RecipeSymbol;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -73,6 +74,14 @@ public class GrammarBasedParserTest {
     RecipeParser parser = TestingRig.parse(recipe);
     List<Directive> directives = parser.parse();
     Assert.assertEquals(0, directives.size());
+  }
+
+  @Test
+  public void testByteSizeAndDurationParsing() throws Exception {
+    String recipe = "aggregate-stats :sizeCol :timeCol :outputSize :outputTime ;";
+    RecipeCompiler compiler = new RecipeCompiler();
+    RecipeSymbol symbol = compiler.compile(recipe).getSymbols();
+    Assert.assertEquals(1, symbol.size());
   }
 
 }

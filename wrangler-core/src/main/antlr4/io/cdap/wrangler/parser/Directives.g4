@@ -140,8 +140,18 @@ numberRange
  ;
 
 value
- : String | Number | Column | Bool
+ : String
+ | Number
+ | Column
+ | Bool
+ | byteSizeArg
+ | timeDurationArg
  ;
+
+
+ byteSizeArg : BYTE_SIZE;
+ timeDurationArg : TIME_DURATION;
+
 
 ecommand
  : '!' Identifier
@@ -162,6 +172,15 @@ text
 number
  : Number
  ;
+
+ BYTE_SIZE : NUMBER BYTE_UNIT;
+ TIME_DURATION : NUMBER TIME_UNIT;
+
+ fragment BYTE_UNIT : [KkMmGgTt][Bb] | [Bb];
+ fragment TIME_UNIT : [Mm][Ss] | [Ss] | [Mm] | [Hh];
+
+ fragment NUMBER : Int ('.' Digit*)?;
+
 
 bool
  : Bool
@@ -194,6 +213,7 @@ stringList
 identifierList
  : Identifier (',' Identifier)*
  ;
+
 
 
 /*
